@@ -23,7 +23,7 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
  * Status: 
    * Pending (P), Started (S), Blocked (B), Done (D)
  * Definition of Done (DoD):
-   * If it
+   * A feature is done if it properly aligns with the business logic, correctly following its description while using the rulebook for specifics on how that feature should work. The code should be commented, and run and compile properly on maven too. It should pass testing if applicable. 
 
 ### Backlog 
 
