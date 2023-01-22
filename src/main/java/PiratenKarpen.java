@@ -21,6 +21,10 @@ public class PiratenKarpen {
         ui.close();
     }
 
+    public static void playGame(Dice myDice){
+
+    }
+
     // Rolls dice based on how many rolls are left until all 8 dice have been rolled.
     public static void rollDice(Dice myDice, ArrayList<Faces> rolls){
 
@@ -43,7 +47,7 @@ public class PiratenKarpen {
     }
 
     // Allows user to take one turn until they stop rolling dice.
-    public static void takeTurn(Dice myDice, String player){
+    public static int takeTurn(Dice myDice, String player){
 
         // Does the first roll for the user.
         System.out.printf("\nPlayer %s is now rolling... \n", player);
@@ -51,13 +55,16 @@ public class PiratenKarpen {
         rollDice(myDice, rolls);
 
         // Checks how many skulls there are, exits method if 3 or more.
-        int numSkulls = checkSkulls(rolls);
+        int numSkulls = countFace(rolls, Faces.SKULL);
         if (numSkulls > 2){
             System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
-            return;
+            return 0;
         }
         
         String choice;
+        int points = 100 * (countFace(rolls, Faces.DIAMOND) + countFace(rolls, Faces.GOLD));
+        System.out.printf("You have %d points! \n", points);
+        System.out.printf("You rolled %d skulls! \n", numSkulls);
 
         // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
         while (true){
@@ -67,17 +74,19 @@ public class PiratenKarpen {
             // Ends turn.
             if (!choice.equalsIgnoreCase("y")){
                 System.out.printf("Player %s has finished rolling! \n", player);
-                return;
+                return points;
             }
 
             // Rerolls all non skull dice.
             rollDice(myDice, rolls);
-            numSkulls = checkSkulls(rolls);
+            numSkulls = countFace(rolls, Faces.SKULL);
+            points = 100 * (countFace(rolls, Faces.DIAMOND) + countFace(rolls, Faces.GOLD));
             if (numSkulls > 2){
                 System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
-                return;
+                return 0;
             }
             else{
+                System.out.printf("You have %d points! \n", points);
                 System.out.printf("You rolled %d skulls! \n", numSkulls);
             }
 
@@ -86,10 +95,10 @@ public class PiratenKarpen {
     }
 
     // Returns the number of skulls in the list.
-    public static int checkSkulls(ArrayList<Faces> rolls){
+    public static int countFace(ArrayList<Faces> rolls, Faces face){
         int counter = 0;
         for (int i = 0; i < rolls.size(); i++){
-            if (rolls.get(i) == Faces.SKULL)
+            if (rolls.get(i) == face)
                 counter++;
         }
         return counter;

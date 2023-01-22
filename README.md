@@ -34,7 +34,7 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | x   | F03 | Play 42 games as a simulation  |  P  |   |
 | x   | F04 | end of turn with three skulls | D | 1/22/23 | 1/22/23 |
 | x   | F05 | Player keeping random dice at their turn | D (F02) | 1/22/23 |  1/22/23 |
-| x   | F06 | Score points: count number of gold coins and diamonds, multiply by 100 | B (F04) | | 
+| x   | F06 | Score points: count number of gold coins and diamonds, multiply by 100 | D (F04) | 1/22/23 | 1/22/23 |
 |     | F07 | Two Players who use the same strategy | B (F05) | |
 |     | F08 | At the end of a simulation, print percentage of wins per player | B (all) | | 
 | ... | ... | ... |
