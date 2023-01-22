@@ -73,7 +73,13 @@ public class PiratenKarpen {
             // Rerolls all non skull dice.
             rollDice(myDice, rolls);
             numSkulls = checkSkulls(rolls);
-            System.out.printf("You rolled %d skulls! \n", numSkulls);
+            if (numSkulls > 2){
+                System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
+                return;
+            }
+            else{
+                System.out.printf("You rolled %d skulls! \n", numSkulls);
+            }
 
         }
 
