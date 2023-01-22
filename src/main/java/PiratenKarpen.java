@@ -14,14 +14,43 @@ public class PiratenKarpen {
         System.out.println(myDice.roll());
         System.out.println("That's all folks!");
         System.out.println("\nHaha, tricked you!! We're back, rolling 8 dice this time.");
-        takeTurn(myDice, "1");
-        takeTurn(myDice, "2");
-        takeTurn(myDice, "3");
+        playGame(myDice);
 
         ui.close();
     }
 
+    // Plays one game of piraten karpen.
     public static void playGame(Dice myDice){
+
+        int p1Points = 0, p2Points = 0;
+
+        while (p1Points < 6000 && p2Points < 6000){
+
+            // Eachs player takes their turn rolling.
+            p1Points += takeTurn(myDice, "1");
+            System.out.printf("\nPlayer 1 has %d points total.\n\n", p1Points);
+            p2Points += takeTurn(myDice, "2");
+            System.out.printf("\nPlayer 2 has %d points total.\n\n", p2Points);
+
+            // Lets p1 go again if p2 got more than 6000 points.
+            if (p2Points >= 6000){
+                p1Points += takeTurn(myDice, "1");
+                System.out.printf("\nPlayer 1 has %d points total.\n\n", p1Points);
+            }
+
+        }
+
+        System.out.printf("\n\nThe game is now over. \nPlayer 1 Points: %d \nPlayer 2 Points: %d\n", p1Points, p2Points);
+        // Declares the winner of the game.
+        if (p1Points > p2Points){
+            System.out.println("Player 1 wins!!!");
+        }
+        else if (p1Points < p2Points){
+            System.out.println("Player 2 wins!!!");
+        }
+        else{
+            System.out.println("The game is a tie!!!");
+        }
 
     }
 
@@ -63,7 +92,7 @@ public class PiratenKarpen {
         
         String choice;
         int points = 100 * (countFace(rolls, Faces.DIAMOND) + countFace(rolls, Faces.GOLD));
-        System.out.printf("You have %d points! \n", points);
+        System.out.printf("You have %d points this turn! \n", points);
         System.out.printf("You rolled %d skulls! \n", numSkulls);
 
         // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
@@ -86,7 +115,7 @@ public class PiratenKarpen {
                 return 0;
             }
             else{
-                System.out.printf("You have %d points! \n", points);
+                System.out.printf("You have %d points this turn! \n", points);
                 System.out.printf("You rolled %d skulls! \n", numSkulls);
             }
 

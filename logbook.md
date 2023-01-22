@@ -9,3 +9,4 @@ Format: Date | Description of work
 2023-01-22 | Delivered F05, choosing to reroll all non skull dice for the sake of an MVP.
 2023-01-22 | Delivered F04, adding a couple lines of code to exit the turn counter when enough skulls are rolled.
 2023-01-22 | Delivered F06, counting points for one turn and adding that to the total number of points which is returned.
+2023-01-22 | Delivered F07, having one game go until 6000 points. That is in its own method.
