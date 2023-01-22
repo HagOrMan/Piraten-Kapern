@@ -36,6 +36,6 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | x   | F05 | Player keeping random dice at their turn | D (F02) | 1/22/23 |  1/22/23 |
 | x   | F06 | Score points: count number of gold coins and diamonds, multiply by 100 | D (F04) | 1/22/23 | 1/22/23 |
 |     | F07 | Two Players who use the same strategy | D (F05) | 1/22/23 | 1/22/23 |
-|     | F08 | At the end of a simulation, print percentage of wins per player | B (all) | | 
+|     | F08 | At the end of a simulation, print percentage of wins per player | D (all) | 1/22/23 | 1/22/23 |
 | ... | ... | ... |
 

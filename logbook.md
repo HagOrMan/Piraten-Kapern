@@ -11,3 +11,4 @@ Format: Date | Description of work
 2023-01-22 | Delivered F06, counting points for one turn and adding that to the total number of points which is returned.
 2023-01-22 | Delivered F07, having one game go until 6000 points. That is in its own method.
 2023-01-22 | Delivered F03, simulating 42 games. Changed logic in the turn method to not require user input to allow for easy sims.
+2023-01-22 | Delivered F08, showing the win percentage per player.
