@@ -2,6 +2,7 @@ import pk.Dice;
 import pk.Faces;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class PiratenKarpen {
 
@@ -33,14 +34,30 @@ public class PiratenKarpen {
         ArrayList<Faces> rolls = new ArrayList<>();
         rollDice(myDice, rolls);
 
-        // Checks how many skulls there are.
+        // Checks how many skulls there are, exits method if 3 or more.
         int numSkulls = checkSkulls(rolls);
         if (numSkulls > 2){
             System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
+            return;
         }
 
-        // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
+        Scanner ui = new Scanner(System.in);
+        String choice;
 
+        // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
+        while (true){
+            System.out.print("\nType 'y' or 'Y' if you would like to continue rolling, or anything else if you want to end your turn: ");
+            choice = ui.nextLine();
+
+            // Ends turn.
+            if (!choice.equalsIgnoreCase("y")){
+                ui.close();
+                return;
+            }
+
+            // Randomly chooses
+
+        }
 
     }
 
@@ -52,6 +69,23 @@ public class PiratenKarpen {
                 counter++;
         }
         return counter;
+    }
+
+    // Moves skulls to beginning of list.
+    public static void moveSkulls(ArrayList<Faces> rolls, int numSkulls){
+        int skullPos = 0;
+        for (int i = 0; i < rolls.size(); i++){
+
+            // If rolled a skull, always incrememnts skull position, and swaps skull with skull position.
+            if (rolls.get(i) == Faces.SKULL){
+                if (i != skullPos){ Collections.swap(rolls, i, skullPos);}
+                skullPos++; 
+            }
+
+            // Exits method if we have moved all skulls.
+            if (skullPos + 1 == numSkulls){ return; }
+            
+        }
     }
     
 }
