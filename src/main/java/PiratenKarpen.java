@@ -16,7 +16,6 @@ public class PiratenKarpen {
         System.out.println("That's all folks!");
         System.out.println("\nHaha, tricked you!! We're back, rolling 8 dice this time.");
         
-        
         playGames(myDice);
 
         ui.close();
@@ -40,8 +39,8 @@ public class PiratenKarpen {
 
         // Prints all win percentages.
         System.out.println("\n\n\nAll 42 games are now done!");
-        System.out.printf("Player 1 Win Percentage: %.2f \n", p1Wins / 42);
-        System.out.printf("Player 2 Win Percentage: %.2f \n", p2Wins / 42);
+        System.out.printf("Player 1 Win Percentage: %.2f \n", p1Wins / 42.0);
+        System.out.printf("Player 2 Win Percentage: %.2f \n", p2Wins / 42.0);
         
     }
 
