@@ -31,7 +31,7 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | :-:  |:-:  |---       | :-:     | :-:       | :-:       |
 | x   | F01 | Roll a dice |  D | 01/01/23 | 1/21/23 |
 | x   | F02 | Roll eight dices  |  D (F01) | 1/22/23  | 1/22/23 |
-| x   | F03 | Play 42 games as a simulation  |  P  |   |
+| x   | F03 | Play 42 games as a simulation  | D | 1/22/23  | 1/22/23 |
 | x   | F04 | end of turn with three skulls | D | 1/22/23 | 1/22/23 |
 | x   | F05 | Player keeping random dice at their turn | D (F02) | 1/22/23 |  1/22/23 |
 | x   | F06 | Score points: count number of gold coins and diamonds, multiply by 100 | D (F04) | 1/22/23 | 1/22/23 |

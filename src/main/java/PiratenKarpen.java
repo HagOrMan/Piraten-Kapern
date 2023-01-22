@@ -2,6 +2,7 @@ import pk.Dice;
 import pk.Faces;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 public class PiratenKarpen {
 
@@ -14,13 +15,34 @@ public class PiratenKarpen {
         System.out.println(myDice.roll());
         System.out.println("That's all folks!");
         System.out.println("\nHaha, tricked you!! We're back, rolling 8 dice this time.");
-        playGame(myDice);
+        
+        
+        playGames(myDice);
 
         ui.close();
     }
 
+    // Simulates 42 games.
+    public static void playGames(Dice myDice){
+        String winner = "";
+        int p1Wins = 0, p2Wins = 0;
+
+        // Simulates 42 games and increments winner counters depending on who won.
+        for (int i = 0; i < 42; i++){
+            winner = playOneGame(myDice);
+            if (winner.equals("1")){
+                p1Wins++;
+            }
+            else if (winner.equals("2")){
+                p2Wins++;
+            }
+        }
+
+        
+    }
+
     // Plays one game of piraten karpen.
-    public static void playGame(Dice myDice){
+    public static String playOneGame(Dice myDice){
 
         int p1Points = 0, p2Points = 0;
 
@@ -44,12 +66,15 @@ public class PiratenKarpen {
         // Declares the winner of the game.
         if (p1Points > p2Points){
             System.out.println("Player 1 wins!!!");
+            return "1";
         }
         else if (p1Points < p2Points){
             System.out.println("Player 2 wins!!!");
+            return "2";
         }
         else{
             System.out.println("The game is a tie!!!");
+            return "";
         }
 
     }
@@ -58,11 +83,14 @@ public class PiratenKarpen {
     public static void rollDice(Dice myDice, ArrayList<Faces> rolls){
 
         for (int i = 0; i < 8; i++){
+            // Checks to make sure that the arraylist is not full.
             if (rolls.size() > i){
+                // Rerolls any non skull dice.
                 if (rolls.get(i) != Faces.SKULL){
                     rolls.set(i, myDice.roll());
                 }
             }
+            // Rolls new dice and adds to arraylist if the list is not full yet.
             else{
                 rolls.add(myDice.roll());
             }
@@ -95,10 +123,23 @@ public class PiratenKarpen {
         System.out.printf("You have %d points this turn! \n", points);
         System.out.printf("You rolled %d skulls! \n", numSkulls);
 
+        // Comment out later, keep for simulation.
+        Random bag = new Random();
+
         // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
         while (true){
-            System.out.println("\nEnter 'y' or 'Y' if you would like to continue rolling, or anything else if you want to end your turn: ");
-            choice = ui.nextLine();
+            /**
+                Commented out user input to aid in 42 game simulation.
+             */ 
+            // System.out.println("\nEnter 'y' or 'Y' if you would like to continue rolling, or anything else if you want to end your turn: ");
+            // choice = ui.nextLine();
+
+            if (bag.nextInt(2) == 0){
+                choice = "y";
+            }
+            else{
+                choice = "";
+            }
 
             // Ends turn.
             if (!choice.equalsIgnoreCase("y")){
