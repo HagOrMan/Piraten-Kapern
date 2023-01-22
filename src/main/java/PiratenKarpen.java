@@ -1,4 +1,6 @@
 import pk.Dice;
+import pk.Faces;
+import java.util.ArrayList;
 
 public class PiratenKarpen {
 
@@ -9,16 +11,25 @@ public class PiratenKarpen {
         System.out.println(myDice.roll());
         System.out.println("That's all folks!");
         System.out.println("\nHaha, tricked you!! We're back, rolling 8 dice this time.");
-        roll8Dice(myDice);
     }
 
-    public static void roll8Dice(Dice myDice){
-        for (int i = 0; i < 8; i++){
+    public static ArrayList<Faces> rollDice(Dice myDice, ArrayList<Faces> rolls){
+        for (int i = rolls.size(); i < 8; i++){
+            rolls.add(myDice.roll());
             if (i != 7)
-                System.out.print(myDice.roll() + ", ");
+                System.out.print(rolls.get(i) + ", ");
             else
-                System.out.print(myDice.roll());
+                System.out.print(rolls.get(i));
         }
+        return rolls;
+    }
+
+    public static void takeTurn(Dice myDice, String player){
+
+        System.out.printf("Player $s is now rolling... \n", player);
+        ArrayList<Faces> rolls = new ArrayList<>();
+        rollDice(myDice, rolls);
+
     }
     
 }
