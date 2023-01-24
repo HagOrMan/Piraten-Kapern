@@ -10,11 +10,7 @@ public class PiratenKarpen {
 
     public static void main(String[] args) {
         System.out.println("Welcome to Piraten Karpen Simulator!");
-        System.out.println("I'm rolling a dice");
         Dice myDice = new Dice();
-        System.out.println(myDice.roll());
-        System.out.println("That's all folks!");
-        System.out.println("\nHaha, tricked you!! We're back, rolling 8 dice this time.");
         
         playGames(myDice);
 
@@ -82,47 +78,24 @@ public class PiratenKarpen {
 
     }
 
-    // Rolls dice based on how many rolls are left until all 8 dice have been rolled.
-    public static void rollDice(Dice myDice, ArrayList<Faces> rolls){
-
-        for (int i = 0; i < 8; i++){
-            // Checks to make sure that the arraylist is not full.
-            if (rolls.size() > i){
-                // Rerolls any non skull dice.
-                if (rolls.get(i) != Faces.SKULL){
-                    rolls.set(i, myDice.roll());
-                }
-            }
-            // Rolls new dice and adds to arraylist if the list is not full yet.
-            else{
-                rolls.add(myDice.roll());
-            }
-            if (i != 7){
-                System.out.print(rolls.get(i) + ", ");
-            }
-            else{
-                System.out.print(rolls.get(i) + "\n");
-            }
-        }
-    }
-
+    
     // Allows user to take one turn until they stop rolling dice.
     public static int takeTurn(Dice myDice, String player){
 
         // Does the first roll for the user.
         System.out.printf("\nPlayer %s is now rolling... \n", player);
-        ArrayList<Faces> rolls = new ArrayList<>();
-        rollDice(myDice, rolls);
+        myDice.resetRolls();
+        myDice.rollDice();
 
         // Checks how many skulls there are, exits method if 3 or more.
-        int numSkulls = countFace(rolls, Faces.SKULL);
+        int numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
         if (numSkulls > 2){
             System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
             return 0;
         }
         
         String choice;
-        int points = 100 * (countFace(rolls, Faces.DIAMOND) + countFace(rolls, Faces.GOLD));
+        int points = 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
         System.out.printf("You have %d points this turn! \n", points);
         System.out.printf("You rolled %d skulls! \n", numSkulls);
 
@@ -151,9 +124,9 @@ public class PiratenKarpen {
             }
 
             // Rerolls all non skull dice.
-            rollDice(myDice, rolls);
-            numSkulls = countFace(rolls, Faces.SKULL);
-            points = 100 * (countFace(rolls, Faces.DIAMOND) + countFace(rolls, Faces.GOLD));
+            myDice.rollDice();
+            numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
+            points = 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
             if (numSkulls > 2){
                 System.out.printf("Sorry, your turn is over!! You rolled %d skulls... \n", numSkulls);
                 return 0;
