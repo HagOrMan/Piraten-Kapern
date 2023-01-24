@@ -94,7 +94,7 @@ public class PiratenKarpen {
             return 0;
         }
         
-        String choice;
+        int choice;
         int points = 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
         System.out.printf("You have %d points this turn! \n", points);
         System.out.printf("You rolled %d skulls! \n", numSkulls);
@@ -104,21 +104,16 @@ public class PiratenKarpen {
 
         // Lets the user keep rolling until satisfied or 3 skulls have been gotten.
         while (true){
-            /**
-                Commented out user input to aid in 42 game simulation.
-             */ 
-            // System.out.println("\nEnter 'y' or 'Y' if you would like to continue rolling, or anything else if you want to end your turn: ");
-            // choice = ui.nextLine();
 
             if (bag.nextInt(2) == 0){
-                choice = "y";
+                choice = 0;
             }
             else{
-                choice = "";
+                choice = 1;
             }
 
             // Ends turn.
-            if (!choice.equalsIgnoreCase("y")){
+            if (choice == 0){
                 System.out.printf("Player %s has finished rolling! \n", player);
                 return points;
             }
