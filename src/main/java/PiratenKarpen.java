@@ -1,5 +1,6 @@
 import pk.Dice;
 import pk.Faces;
+import pk.Player;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -20,56 +21,57 @@ public class PiratenKarpen {
     // Simulates 42 games.
     public static void playGames(Dice myDice){
         String winner = "";
-        int p1Wins = 0, p2Wins = 0;
+        Player p1 = new Player("1"), p2 = new Player("2");
 
         // Simulates 42 games and increments winner counters depending on who won.
         for (int i = 0; i < 42; i++){
-            winner = playOneGame(myDice);
-            if (winner.equals("1")){
-                p1Wins++;
+            winner = playOneGame(myDice, p1, p2);
+            if (winner.equals(p1.getName())){
+                p1.won();
             }
-            else if (winner.equals("2")){
-                p2Wins++;
+            else if (winner.equals(p2.getName())){
+                p2.won();
             }
         }
 
         // Prints all win percentages.
         System.out.println("\n\n\nAll 42 games are now done!");
-        System.out.printf("Player 1 Win Percentage: %.2f \n", p1Wins / 42.0);
-        System.out.printf("Player 2 Win Percentage: %.2f \n", p2Wins / 42.0);
+        System.out.printf("Player 1 Win Percentage: %.2f \n", p1.calcWinPerc());
+        System.out.printf("Player 2 Win Percentage: %.2f \n", p2.calcWinPerc());
         
     }
 
     // Plays one game of piraten karpen.
-    public static String playOneGame(Dice myDice){
+    public static String playOneGame(Dice myDice, Player p1, Player p2){
 
-        int p1Points = 0, p2Points = 0;
+        p1.resetPoints(); p2.resetPoints();
 
-        while (p1Points < 6000 && p2Points < 6000){
+        while (p1.getPoints() < 6000 && p2.getPoints() < 6000){
 
             // Eachs player takes their turn rolling.
-            p1Points += takeTurn(myDice, "1");
-            System.out.printf("\nPlayer 1 has %d points total.\n\n", p1Points);
-            p2Points += takeTurn(myDice, "2");
-            System.out.printf("\nPlayer 2 has %d points total.\n\n", p2Points);
+            p1.addPoints(takeTurn(myDice, p1));
+            System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
+            p2.addPoints(takeTurn(myDice, p2));
+            System.out.printf("\nPlayer 2 has %d points total.\n\n", p2.getPoints());
 
             // Lets p1 go again if p2 got more than 6000 points.
-            if (p2Points >= 6000){
-                p1Points += takeTurn(myDice, "1");
-                System.out.printf("\nPlayer 1 has %d points total.\n\n", p1Points);
+            if (p2.getPoints() >= 6000){
+                p1.addPoints(takeTurn(myDice, p1));
+                System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
             }
 
         }
 
-        System.out.printf("\n\nThe game is now over. \nPlayer 1 Points: %d \nPlayer 2 Points: %d\n", p1Points, p2Points);
+        System.out.printf("\n\nThe game is now over. \nPlayer 1 Points: %d \nPlayer 2 Points: %d\n", p1.getPoints(), p2.getPoints());
+        p1.playedGame(); p2.playedGame();
         // Declares the winner of the game.
-        if (p1Points > p2Points){
-            System.out.println("Player 1 wins!!!");
-            return "1";
+        if (p1.getPoints() > p2.getPoints()){
+            System.out.printf("Player %s wins!!!\n", p1.getName());
+            return p1.getName();
         }
-        else if (p1Points < p2Points){
-            System.out.println("Player 2 wins!!!");
-            return "2";
+        else if (p1.getPoints() < p2.getPoints()){
+            System.out.printf("Player %s wins!!!\n", p2.getName());
+            return p2.getName();
         }
         else{
             System.out.println("The game is a tie!!!");
@@ -80,10 +82,10 @@ public class PiratenKarpen {
 
     
     // Allows user to take one turn until they stop rolling dice.
-    public static int takeTurn(Dice myDice, String player){
+    public static int takeTurn(Dice myDice, Player player){
 
         // Does the first roll for the user.
-        System.out.printf("\nPlayer %s is now rolling... \n", player);
+        System.out.printf("\nPlayer %s is now rolling... \n", player.getName());
         myDice.resetRolls();
         myDice.rollDice();
 
@@ -114,7 +116,7 @@ public class PiratenKarpen {
 
             // Ends turn.
             if (choice == 0){
-                System.out.printf("Player %s has finished rolling! \n", player);
+                System.out.printf("Player %s has finished rolling! \n", player.getName());
                 return points;
             }
 

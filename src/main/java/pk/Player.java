@@ -14,7 +14,7 @@ public class Player{
     }
 
     public double calcWinPerc(){
-        return wins/games;
+        return (double)wins/games;
     }
 
     public int getPoints(){ return points; }
@@ -23,5 +23,10 @@ public class Player{
         this.points += points;
     }
 
+    public void resetPoints(){ points = 0; }
+
     public String getName(){ return name; }
+
+    public void won(){ wins++; }
+    public void playedGame(){ games++; }
 }
