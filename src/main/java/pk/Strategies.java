@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class Strategies {
 
     // Allows user to take one turn until they stop rolling dice, while rerolling all non skull dice a random amount of times.
-    public static int rerollAll(Dice myDice, Player player, boolean trace, Logger logger){
+    public static int randomRoller(Dice myDice, Player player, boolean trace, Logger logger){
 
         // Does the first roll for the user.
         logger.info("Player " + player.getName() + " is now rolling...");
@@ -63,6 +63,7 @@ public class Strategies {
 
     }
 
+    public static int comboRoller(Dice myDice, Player player, boolean trace, Logger logger){ return 0; }
     
     // Returns the number of a certain face in the list.
     public static int countFace(ArrayList<Faces> rolls, Faces face){

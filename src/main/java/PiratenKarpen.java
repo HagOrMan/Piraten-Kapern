@@ -22,7 +22,7 @@ public class PiratenKarpen {
 
         System.out.println("Welcome to Piraten Karpen Simulator!");
         Dice myDice = new Dice();
-        Player p1 = new Player("1"), p2 = new Player("2");
+        Player p1 = new Player("1", "random"), p2 = new Player("2", "random");
         
         Games.playGames(myDice, p1, p2, 42, trace, logger);
 

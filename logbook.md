@@ -18,3 +18,4 @@ Format: Date | Description of work
 2023-01-25 | Created Games class to control the overall number of games and each individual game.
 2023-01-25 | Changed all println and printf to logger statements, except for the final win percentage print.
 2023-01-25 | Delivered F09, counting combos for 3 to eight of a kind.
+2023-01-25 | Changed Player class to have a strategy associated with it.
