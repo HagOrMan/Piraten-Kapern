@@ -12,8 +12,6 @@ public class Dice {
 
     public Faces roll() {
         int howManyFaces = Faces.values().length;
-        // System.out.println("  (DEBUG) there are " + howManyFaces + " faces");
-        // System.out.println("  (DEBUG) " + Arrays.toString(Faces.values()));
         Random bag = new Random();
         return Faces.values()[bag.nextInt(howManyFaces)];
     }
@@ -33,6 +31,7 @@ public class Dice {
             else{
                 rolls.add(roll());
             }
+
             if (i != 7){
                 System.out.print(rolls.get(i) + ", ");
             }
@@ -42,9 +41,7 @@ public class Dice {
         }
     }
 
-    public void resetRolls(){
-        rolls.clear();
-    }
+    public void resetRolls(){ rolls.clear(); }
     
     public ArrayList<Faces> getRolls(){ return rolls; }
 }

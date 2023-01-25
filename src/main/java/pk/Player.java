@@ -13,15 +13,11 @@ public class Player{
         this.name = name;
     }
 
-    public double calcWinPerc(){
-        return (double)wins/games;
-    }
+    public double calcWinPerc(){ return (double)wins/games; }
 
     public int getPoints(){ return points; }
 
-    public void addPoints(int points){
-        this.points += points;
-    }
+    public void addPoints(int points){ this.points += points; }
 
     public void resetPoints(){ points = 0; }
 

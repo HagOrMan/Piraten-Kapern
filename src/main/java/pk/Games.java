@@ -6,7 +6,7 @@ public class Games {
     public static void playGames(Dice myDice, Player p1, Player p2, int numGames){
         String winner = "";
 
-        // Simulates 42 games and increments winner counters depending on who won.
+        // Simulates a specified number of games and increments winner counters depending on who won.
         for (int i = 0; i < numGames; i++){
             p1.resetPoints(); p2.resetPoints();
             winner = playOneGame(myDice, p1, p2);
@@ -44,9 +44,10 @@ public class Games {
 
         }
 
+        // Declares the winner of the game and everyone's points.
         System.out.printf("\n\nThe game is now over. \nPlayer 1 Points: %d \nPlayer 2 Points: %d\n", p1.getPoints(), p2.getPoints());
         p1.playedGame(); p2.playedGame();
-        // Declares the winner of the game.
+    
         if (p1.getPoints() > p2.getPoints()){
             System.out.printf("Player %s wins!!!\n", p1.getName());
             return p1.getName();
