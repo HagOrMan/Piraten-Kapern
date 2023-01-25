@@ -15,3 +15,4 @@ Format: Date | Description of work
 2023-01-23 | Started working on Player class to create new logic and save player data in a class instead of primitive data.
 2023-01-24 | Moved rolling multiple dice method to dice class rather than main class.
 2023-01-25 | Created Strategies class to implement the random reroll strategy for one turn.
+2023-01-25 | Created Games class to control the overall number of games and each individual game.
