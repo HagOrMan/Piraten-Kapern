@@ -46,11 +46,11 @@ public class Games {
         p1.playedGame(); p2.playedGame();
     
         if (p1.getPoints() > p2.getPoints()){
-            logger.info("Player " + p1.getName());
+            logger.info("Player " + p1.getName() + " won this game!");
             p1.won();
         }
         else if (p1.getPoints() < p2.getPoints()){
-            logger.info("Player " + p2.getName());
+            logger.info("Player " + p2.getName() + " won this game!");
             p2.won();
         }
         else{

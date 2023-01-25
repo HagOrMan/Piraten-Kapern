@@ -38,5 +38,8 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | x   | F06 | Score points: count number of gold coins and diamonds, multiply by 100 | D (F04) | 1/22/23 | 1/22/23 |
 | x   | F07 | Two Players who use the same strategy | D (F05) | 1/22/23 | 1/22/23 |
 | x   | F08 | At the end of a simulation, print percentage of wins per player | D (all) | 1/22/23 | 1/22/23 |
+|     | F09 | Combo multiple cards of a kind for scoring points | D | 1/25/23 | 1/25/23 |
+|     | F10 | Implement strategy for random player | P |  |  |
+|     | F11 | Implement strategy for combo player | P |  |  |
 | ... | ... | ... |
 

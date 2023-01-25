@@ -67,16 +67,35 @@ public class Strategies {
     // Returns the number of a certain face in the list.
     public static int countFace(ArrayList<Faces> rolls, Faces face){
         int counter = 0;
-        for (int i = 0; i < rolls.size(); i++){
-            if (rolls.get(i) == face)
+        for (Faces roll : rolls) {
+            if (roll == face)
                 counter++;
         }
         return counter;
     }
 
-    // Logic for calculating points of a dice roll.
+    // Logic for calculating points of their dice roll.
     public static int calcPoints(Dice myDice){
-        return 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
+
+        // Basic first logic for diamond and gold points.
+        int points = 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
+
+        // Adding points for any combos.
+        for (Faces face : Faces.values()){
+            if (face == Faces.SKULL){ continue; }
+            switch (countFace(myDice.getRolls(), face)) {
+                case 3 -> points += 100;
+                case 4 -> points += 200;
+                case 5 -> points += 500;
+                case 6 -> points += 1000;
+                case 7 -> points += 2000;
+                case 8 -> points += 4000;
+                default -> {
+                }
+            }
+        }
+
+        return points;
     }
 
     

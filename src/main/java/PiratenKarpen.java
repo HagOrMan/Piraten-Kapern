@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 public class PiratenKarpen {
 
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(PiratenKarpen.class);
     static Scanner ui = new Scanner(System.in);
 
     public static void main(String[] args) {
