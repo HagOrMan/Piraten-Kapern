@@ -3,7 +3,7 @@ package pk;
 public class Games {
 
     // Simulates 42 games.
-    public static void playGames(Dice myDice, Player p1, Player p2, int numGames){
+    public static void playGames(Dice myDice, Player p1, Player p2, int numGames, int trace){
         String winner = "";
 
         // Simulates a specified number of games and increments winner counters depending on who won.
