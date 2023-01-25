@@ -9,8 +9,8 @@
     * `mvn clean`
   * To compile the project:
     * `mvn compile`
-  * To run the project in development mode value of trace 0 if you want trace disabled, 1 if enabled:
-    * `mvn -q exec:java -Dexec.args="{ trace }"` (here, `-q` tells maven to be _quiet_)
+  * To run the project in development mode, use a trace value of 0 if you want trace disabled, 1 if enabled:
+    * `mvn -q exec:java -Dexec.args="trace"` (here, `-q` tells maven to be _quiet_)
   * To package the project as a turn-key artefact:
     * `mvn package`
   * To run the packaged delivery:

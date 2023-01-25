@@ -1,6 +1,8 @@
 package pk;
 import java.util.ArrayList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Dice {
 
@@ -17,8 +19,9 @@ public class Dice {
     }
 
     // Rolls dice based on how many rolls are left until all 8 dice have been rolled.
-    public void rollDice(){
+    public void rollDice(Logger logger){
 
+        String diceRolls = "";
         for (int i = 0; i < 8; i++){
             // Checks to make sure that the arraylist is not full.
             if (rolls.size() > i){
@@ -32,13 +35,14 @@ public class Dice {
                 rolls.add(roll());
             }
 
+            diceRolls += rolls.get(i);
             if (i != 7){
-                System.out.print(rolls.get(i) + ", ");
-            }
-            else{
-                System.out.print(rolls.get(i) + "\n");
+                diceRolls += ", ";
             }
         }
+
+        logger.trace(diceRolls);
+
     }
 
     public void resetRolls(){ rolls.clear(); }

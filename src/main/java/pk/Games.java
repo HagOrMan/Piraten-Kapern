@@ -6,18 +6,11 @@ public class Games {
 
     // Simulates 42 games.
     public static void playGames(Dice myDice, Player p1, Player p2, int numGames, boolean trace, Logger logger){
-        String winner = "";
 
         // Simulates a specified number of games and increments winner counters depending on who won.
         for (int i = 0; i < numGames; i++){
             p1.resetPoints(); p2.resetPoints();
-            winner = playOneGame(myDice, p1, p2, trace, logger);
-            if (winner.equals(p1.getName())){
-                p1.won();
-            }
-            else if (winner.equals(p2.getName())){
-                p2.won();
-            }
+            playOneGame(myDice, p1, p2, trace, logger);
         }
 
         // Prints all win percentages.
@@ -28,41 +21,40 @@ public class Games {
     }
 
     // Plays one game of piraten karpen.
-    public static String playOneGame(Dice myDice, Player p1, Player p2, boolean trace, Logger logger){
+    public static void playOneGame(Dice myDice, Player p1, Player p2, boolean trace, Logger logger){
 
         while (p1.getPoints() < 6000 && p2.getPoints() < 6000){
 
             // Eachs player takes their turn rolling.
             p1.addPoints(Strategies.rerollAll(myDice, p1, trace, logger));
             logger.info("Player " + p1.getName() + " has " + p1.getPoints() + " points total.");
-            //System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
             p2.addPoints(Strategies.rerollAll(myDice, p2, trace, logger));
             logger.info("Player " + p2.getName() + " has " + p2.getPoints() + " points total.");
-            //System.out.printf("\nPlayer 2 has %d points total.\n\n", p2.getPoints());
 
             // Lets p1 go again if p2 got more than 6000 points but p1 hasn't this turn.
             if (p2.getPoints() >= 6000 && p1.getPoints() < 6000){
                 p1.addPoints(Strategies.rerollAll(myDice, p1, trace, logger));
-                System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
+                logger.info("Player " + p1.getName() + " has " + p1.getPoints() + " points total.");
             }
 
         }
 
         // Declares the winner of the game and everyone's points.
-        System.out.printf("\n\nThe game is now over. \nPlayer 1 Points: %d \nPlayer 2 Points: %d\n", p1.getPoints(), p2.getPoints());
+        logger.info("The game is now over.");
+        logger.info("Player " + p1.getName() + " Points: " + p1.getPoints());
+        logger.info("Player " + p2.getName() + " Points: " + p2.getPoints());
         p1.playedGame(); p2.playedGame();
     
         if (p1.getPoints() > p2.getPoints()){
-            System.out.printf("Player %s wins!!!\n", p1.getName());
-            return p1.getName();
+            logger.info("Player " + p1.getName());
+            p1.won();
         }
         else if (p1.getPoints() < p2.getPoints()){
-            System.out.printf("Player %s wins!!!\n", p2.getName());
-            return p2.getName();
+            logger.info("Player " + p2.getName());
+            p2.won();
         }
         else{
-            System.out.println("The game is a tie!!!");
-            return "";
+            logger.info("The game is a tie!!!");
         }
 
     }
