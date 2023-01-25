@@ -1,11 +1,13 @@
 package pk;
 import java.util.ArrayList;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Strategies {
 
     // Allows user to take one turn until they stop rolling dice, while rerolling all non skull dice a random amount of times.
-    public static int rerollAll(Dice myDice, Player player){
+    public static int rerollAll(Dice myDice, Player player, boolean trace, Logger logger){
 
         // Does the first roll for the user.
         System.out.printf("\nPlayer %s is now rolling... \n", player.getName());

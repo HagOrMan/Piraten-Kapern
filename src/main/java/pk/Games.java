@@ -1,15 +1,17 @@
 package pk;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Games {
 
     // Simulates 42 games.
-    public static void playGames(Dice myDice, Player p1, Player p2, int numGames, int trace){
+    public static void playGames(Dice myDice, Player p1, Player p2, int numGames, boolean trace, Logger logger){
         String winner = "";
 
         // Simulates a specified number of games and increments winner counters depending on who won.
         for (int i = 0; i < numGames; i++){
             p1.resetPoints(); p2.resetPoints();
-            winner = playOneGame(myDice, p1, p2);
+            winner = playOneGame(myDice, p1, p2, trace, logger);
             if (winner.equals(p1.getName())){
                 p1.won();
             }
@@ -26,19 +28,21 @@ public class Games {
     }
 
     // Plays one game of piraten karpen.
-    public static String playOneGame(Dice myDice, Player p1, Player p2){
+    public static String playOneGame(Dice myDice, Player p1, Player p2, boolean trace, Logger logger){
 
         while (p1.getPoints() < 6000 && p2.getPoints() < 6000){
 
             // Eachs player takes their turn rolling.
-            p1.addPoints(Strategies.rerollAll(myDice, p1));
-            System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
-            p2.addPoints(Strategies.rerollAll(myDice, p2));
-            System.out.printf("\nPlayer 2 has %d points total.\n\n", p2.getPoints());
+            p1.addPoints(Strategies.rerollAll(myDice, p1, trace, logger));
+            logger.info("Player " + p1.getName() + " has " + p1.getPoints() + " points total.");
+            //System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
+            p2.addPoints(Strategies.rerollAll(myDice, p2, trace, logger));
+            logger.info("Player " + p2.getName() + " has " + p2.getPoints() + " points total.");
+            //System.out.printf("\nPlayer 2 has %d points total.\n\n", p2.getPoints());
 
             // Lets p1 go again if p2 got more than 6000 points but p1 hasn't this turn.
             if (p2.getPoints() >= 6000 && p1.getPoints() < 6000){
-                p1.addPoints(Strategies.rerollAll(myDice, p1));
+                p1.addPoints(Strategies.rerollAll(myDice, p1, trace, logger));
                 System.out.printf("\nPlayer 1 has %d points total.\n\n", p1.getPoints());
             }
 
