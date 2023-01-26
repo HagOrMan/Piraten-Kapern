@@ -43,5 +43,8 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |     | F09 | Combo multiple cards of a kind for scoring points | D | 1/25/23 | 1/25/23 |
 |     | F10 | User can choose what kind of strategy to use | D | 1/25/23 | 1/25/23 |
 |     | F11 | User can choose to play as a random or combo player | D | 1/25/23 | 1/25/23 |
-| ... | ... | ... |
+|     | F12 | User will draw a card at the start of each turn | P |  |  |
+|     | F13 | User will have card effects applied to their turn | P |  |  |
+|     | F14 | User choosing combo player will have them prioritize sea battles when drawn | P |  |  |
+| ... | ... | ... | ... | ... | ... |
 

@@ -22,3 +22,4 @@ Format: Date | Description of work
 2023-01-25 | Delivered F10, giving user option to enter the strategy to use in command line argument.
 2023-01-25 | Delivered F11, letting the user choose a combo player and completing the logic for them.
 2023-01-25 | Updated Strategies class to ensure the combo player does not reroll only one dice.
+2023-01-25 | Update readme for new Step 5 logic.
