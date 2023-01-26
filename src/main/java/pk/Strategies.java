@@ -125,8 +125,7 @@ public class Strategies {
             }
         }
         if (rerolls.size() < 5) { rerolls.clear(); }
-        else {
-            if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
+        else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
 
         // Checking diamonds.
         for (int i = 0; i < myDice.getRolls().size(); i++){
@@ -221,6 +220,8 @@ public class Strategies {
         for (int i = 0; i < myDice.getRolls().size(); i++){
             if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
                 rerolls.add(i);
+                // If adding this puts us over the max amount of dice to keep, just returns rerolls.
+                if (!verifyComboRoll(myDice, rerolls)){ rerolls.remove(i); return rerolls; }
             }
         }
         if (rerolls.size() > 0){ if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
@@ -233,12 +234,12 @@ public class Strategies {
     // Decides if the player should keep rolling or stop because they have enough points, true if they should stop.
     public static boolean comboStopStrategy(Dice myDice){
 
-        // Returns immediately to stop rolling if more than or equal to 1000 points.
-        if (calcPoints(myDice) >= 1000){
+        // Returns immediately to stop rolling if more than or equal to 800 points.
+        if (calcPoints(myDice) >= 800){
             return true;
         }
         // Keep rolling if more than or equal to 800 and no skulls yet.
-        if (calcPoints(myDice) >= 800 && countFace(myDice.getRolls(), Faces.SKULL) == 0){
+        if (calcPoints(myDice) >= 600 && countFace(myDice.getRolls(), Faces.SKULL) == 0){
             return false;
         }
         // Keep rolling if less than or equal to 300 and 2 skulls.
