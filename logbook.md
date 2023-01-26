@@ -19,3 +19,4 @@ Format: Date | Description of work
 2023-01-25 | Changed all println and printf to logger statements, except for the final win percentage print.
 2023-01-25 | Delivered F09, counting combos for 3 to eight of a kind.
 2023-01-25 | Changed Player class to have a strategy associated with it.
+2023-01-25 | Delivered F10, giving user option to enter the strategy to use in command line argument.

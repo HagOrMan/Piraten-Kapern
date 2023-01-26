@@ -20,9 +20,19 @@ public class PiratenKarpen {
             trace = args[0].equals("1");
         }
 
+        // If command line argument is specified, uses that strategy for each player. Random if no argument.
+        Player p1, p2;
+        if (args.length == 3){
+            p1 = new Player("1", args[1]);
+            p2 = new Player("2", args[2]);
+        }
+        else {
+            p1 = new Player("1", "random");
+            p2 = new Player("2", "random");
+        }
+
         System.out.println("Welcome to Piraten Karpen Simulator!");
         Dice myDice = new Dice();
-        Player p1 = new Player("1", "random"), p2 = new Player("2", "random");
         
         Games.playGames(myDice, p1, p2, 42, trace, logger);
 

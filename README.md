@@ -13,8 +13,8 @@
     * `mvn -q exec:java -Dexec.args="trace"` (here, `-q` tells maven to be _quiet_)
   * To package the project as a turn-key artefact:
     * `mvn package`
-  * To run the packaged delivery:
-    * `java -jar target/piraten-karpen-jar-with-dependencies.jar` 
+  * To run the packaged delivery, use a trace value of 0 if you want trace disabled, 1 if enabled:
+    * `java -jar target/piraten-karpen-jar-with-dependencies.jar <trace>` 
 
 
 Remark: **We are assuming here you are using a _real_ shell (e.g., anything but PowerShell on Windows)**
@@ -39,7 +39,8 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | x   | F07 | Two Players who use the same strategy | D (F05) | 1/22/23 | 1/22/23 |
 | x   | F08 | At the end of a simulation, print percentage of wins per player | D (all) | 1/22/23 | 1/22/23 |
 |     | F09 | Combo multiple cards of a kind for scoring points | D | 1/25/23 | 1/25/23 |
-|     | F10 | Implement strategy for random player | P | 1/25/23 |  |
-|     | F11 | Implement strategy for combo player | P |  |  |
+|     | F10 | User can choose what kind of strategy to use | D | 1/25/23 | 1/25/23 |
+|     | F11 | User can choose to play as a random player | P | 1/25/23 |  |
+|     | F12 | User can choose to play as a combo player | P |  |  |
 | ... | ... | ... |
 
