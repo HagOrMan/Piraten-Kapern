@@ -40,7 +40,6 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 | x   | F08 | At the end of a simulation, print percentage of wins per player | D (all) | 1/22/23 | 1/22/23 |
 |     | F09 | Combo multiple cards of a kind for scoring points | D | 1/25/23 | 1/25/23 |
 |     | F10 | User can choose what kind of strategy to use | D | 1/25/23 | 1/25/23 |
-|     | F11 | User can choose to play as a random player | P | 1/25/23 |  |
-|     | F12 | User can choose to play as a combo player | P |  |  |
+|     | F11 | User can choose to play as a random or combo player | D | 1/25/23 | 1/25/23 |
 | ... | ... | ... |
 

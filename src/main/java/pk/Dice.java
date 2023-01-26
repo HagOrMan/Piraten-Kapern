@@ -19,7 +19,7 @@ public class Dice {
     }
 
     // Rolls dice based on how many rolls are left until all 8 dice have been rolled.
-    public void rollDice(Logger logger){
+    public void rollDice(Logger logger, boolean trace){
 
         String diceRolls = "";
         for (int i = 0; i < 8; i++){
@@ -41,9 +41,33 @@ public class Dice {
             }
         }
 
-        logger.trace(diceRolls);
+        if (trace) {logger.trace(diceRolls);}
 
     }
+
+    // Rolls dice based on which indices are specified.
+    public void rollComboDice(Logger logger, ArrayList<Integer> keepIndices, boolean trace){
+        // Rerolls any dice not in the specified index to keep.
+        for (int i = 0; i < 8; i++) {
+            // Rerolls any non skull dice that also aren't in the list of dice to keep.
+            if (rolls.get(i) != Faces.SKULL && !keepIndices.contains(i)) {
+                rolls.set(i, roll());
+            }
+        }
+
+        // Puts all rolls into a string.
+        String diceRolls = "";
+        for (int i = 0; i < 8; i++){
+            diceRolls += rolls.get(i);
+            if (i != 7){
+                diceRolls += ", ";
+            }
+        }
+
+        if (trace) {logger.trace(diceRolls);}
+
+    }
+
 
     public void resetRolls(){ rolls.clear(); }
     
