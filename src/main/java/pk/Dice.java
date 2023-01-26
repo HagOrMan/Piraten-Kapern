@@ -27,6 +27,7 @@ public class Dice {
             if (rolls.size() > i){
                 // Rerolls any non skull dice.
                 if (rolls.get(i) != Faces.SKULL){
+
                     rolls.set(i, roll());
                 }
             }
@@ -47,10 +48,12 @@ public class Dice {
 
     // Rolls dice based on which indices are specified.
     public void rollComboDice(Logger logger, ArrayList<Integer> keepIndices, boolean trace){
+        String diceRerolls = "Rerolled: ";
         // Rerolls any dice not in the specified index to keep.
         for (int i = 0; i < 8; i++) {
             // Rerolls any non skull dice that also aren't in the list of dice to keep.
             if (rolls.get(i) != Faces.SKULL && !keepIndices.contains(i)) {
+                diceRerolls += rolls.get(i) + "  ";
                 rolls.set(i, roll());
             }
         }
@@ -64,7 +67,7 @@ public class Dice {
             }
         }
 
-        if (trace) {logger.trace(diceRolls);}
+        if (trace) { logger.trace("Combo Player " + diceRerolls);   logger.trace(diceRolls);}
 
     }
 
