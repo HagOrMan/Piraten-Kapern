@@ -455,8 +455,44 @@ public class Strategies {
             }
         }
 
+        if (checkExtraPoints(myDice, card)){
+            points += 500;
+        }
+
         return points;
     }
+
+    // Checks if all dice rolled contribute to scoring points, meaning 500 extra points are awarded.
+    private static boolean checkExtraPoints(Dice myDice, Card card){
+
+        if (myDice.getFaceRoll(Faces.SKULL) > 0){
+            return false;
+        }
+
+        // Checks all non-gold and non-diamond found in the dice rolls, and if they are part of a combo.
+        for (Faces face : Faces.values()){
+            if (face != Faces.GOLD && face != Faces.DIAMOND && myDice.getRolls().contains(face)){
+
+                // Checks if we're at a saber and sea battle 2 is true because then you don't need 3 to get the treasure.
+                if (face == Faces.SABER && card.getName().equals("Sea Battle 2")){
+                    // If sea battle 2 is played, only need 2 sabers.
+                    if (myDice.getFaceRoll(face) < 2){
+                        return false;
+                    }
+                }
+                else{
+                    // If a face exists in the rolls but is not part of a combo, returns false.
+                    if (myDice.getFaceRoll(face) < 3){
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+        return true;
+    }
+
 
     
 }
