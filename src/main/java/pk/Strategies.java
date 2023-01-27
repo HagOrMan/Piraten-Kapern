@@ -22,7 +22,7 @@ public class Strategies {
         }
         
         boolean choice;
-        int points = calcPoints(myDice);
+        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -45,7 +45,7 @@ public class Strategies {
             // Rerolls all non skull dice.
             myDice.rollDice(logger, trace);
             numSkulls = myDice.getFaceRoll(Faces.SKULL);
-            points = calcPoints(myDice);
+            points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
                 return 0;
@@ -74,7 +74,7 @@ public class Strategies {
             return 0;
         }
 
-        int points = calcPoints(myDice);
+        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -84,7 +84,7 @@ public class Strategies {
         while (true){
 
             // Ends turn depending on the combo player strategy.
-            if (comboStopStrategy(myDice)){
+            if (comboStopStrategy(myDice, card)){
                 if (trace) {logger.info("Player " + player.getName() + " has finished rolling!");}
                 return points;
             }
@@ -92,7 +92,7 @@ public class Strategies {
             // Rerolls all specified non skull dice.
             myDice.rollComboDice(logger, comboRollStrategy(myDice), trace);
             numSkulls = myDice.getFaceRoll(Faces.SKULL);
-            points = calcPoints(myDice);
+            points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
                 return 0;
@@ -248,18 +248,18 @@ public class Strategies {
 
     // Decides if the player should keep rolling or stop because they have enough points, true if they should stop.
     // If statements are in order of priority for stopping/continuing rerolling.
-    public static boolean comboStopStrategy(Dice myDice){
+    public static boolean comboStopStrategy(Dice myDice, Card card){
 
         // Returns immediately to stop rolling if more than or equal to 800 points.
-        if (calcPoints(myDice) >= 800){
+        if (calcPoints(myDice, card) >= 800){
             return true;
         }
         // Keep rolling if more than or equal to 800 and no skulls yet.
-        if (calcPoints(myDice) >= 600 && myDice.getFaceRoll(Faces.SKULL) == 0){
+        if (calcPoints(myDice, card) >= 600 && myDice.getFaceRoll(Faces.SKULL) == 0){
             return false;
         }
         // Keep rolling if less than or equal to 300 and 2 skulls.
-        if (calcPoints(myDice) <= 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
+        if (calcPoints(myDice, card) <= 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
             return false;
         }
         // If more than 3 diamonds or gold and 1 or fewer skulls, keep rolling.
@@ -287,12 +287,12 @@ public class Strategies {
         }
 
         // Keep rolling if more than or equal to 300 points and 1 or fewer skulls.
-        if (calcPoints(myDice) >= 300 && myDice.getFaceRoll(Faces.SKULL) <= 1){
+        if (calcPoints(myDice, card) >= 300 && myDice.getFaceRoll(Faces.SKULL) <= 1){
             return false;
         }
 
         // If nothing above is true, decide based on if more than 300 points, stopping the roll if yes.
-        return calcPoints(myDice) > 300;
+        return calcPoints(myDice, card) > 300;
     }
 
     // Ensures that the number of dice we want to reroll isn't less than 2.
@@ -317,7 +317,7 @@ public class Strategies {
             return 0;
         }
 
-        int points = calcPoints(myDice);
+        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -327,7 +327,7 @@ public class Strategies {
         while (true){
 
             // Ends turn depending on the sea combo player strategy.
-            if (seaStopStrategy(myDice, target)){
+            if (seaStopStrategy(myDice, target, card)){
                 if (trace) {logger.info("Player " + player.getName() + " has finished rolling!");}
                 return points;
             }
@@ -335,7 +335,7 @@ public class Strategies {
             // Rerolls all specified non skull dice.
             myDice.rollComboDice(logger, seaRollStrategy(myDice, target), trace);
             numSkulls = myDice.getFaceRoll(Faces.SKULL);
-            points = calcPoints(myDice);
+            points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
                 return 0;
@@ -393,14 +393,14 @@ public class Strategies {
 
     // Decides if the player should keep rolling or stop because they have enough points, true if they should stop.
     // If statements are in order of priority for stopping/continuing rerolling.
-    public static boolean seaStopStrategy(Dice myDice, int target){
+    public static boolean seaStopStrategy(Dice myDice, int target, Card card){
 
         // If we haven't hit the target, always reroll.
         if (myDice.getFaceRoll(Faces.SABER) > target){
             return false;
         }
         // Returns immediately to stop rolling if more than or equal to 800 points, and we reached the target.
-        if (calcPoints(myDice) >= 800){
+        if (calcPoints(myDice, card) >= 800){
             return true;
         }
         // If no skulls, and we hit the target, try and get some extra points by rerolling, else end turn.
@@ -409,10 +409,26 @@ public class Strategies {
     }
 
     // Logic for calculating points of their dice roll.
-    public static int calcPoints(Dice myDice){
+    public static int calcPoints(Dice myDice, Card card){
+
+        int points = 0;
+
+        // If a sea battle card was drawn, checks if they have enough sabers, returning  if not.
+        if (card.getType().equals("Sea Battle")){
+            if (myDice.getFaceRoll(Faces.SABER) < Integer.parseInt(card.getModifier())){
+                return points;
+            }
+            // Adds appropriate amount of points.
+            switch (Integer.parseInt(card.getModifier())){
+                case 2 -> points += 300;
+                case 3 -> points += 500;
+                case 4 -> points += 1000;
+                default -> points += 0;
+            }
+        }
 
         // Basic first logic for diamond and gold points.
-        int points = 100 * (myDice.getFaceRoll(Faces.DIAMOND) + myDice.getFaceRoll(Faces.GOLD));
+        points += 100 * (myDice.getFaceRoll(Faces.DIAMOND) + myDice.getFaceRoll(Faces.GOLD));
 
         // Adding points for any combos.
         for (Faces face : Faces.values()){

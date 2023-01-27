@@ -45,7 +45,7 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |     | F11 | User can choose to play as a random or combo player | D | 1/25/23 | 1/25/23 |
 |     | F12 | User will draw a card at the start of each turn | D | 1/26/23 | 1/27/23 |
 |     | F13 | User choosing combo player will have them prioritize sea battles when drawn | D | 1/27/23 | 1/27/23 |
-|     | F14 | User will have card effects applied to their turn | P |  |  |
+|     | F14 | User will have card effects applied to their turn | D | 1/27/23 | 1/27/23 |
 | ... | ... | ... | ... | ... | ... |
 
 add trace statements for cards
