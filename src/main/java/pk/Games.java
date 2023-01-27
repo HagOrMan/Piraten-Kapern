@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Games {
 
-    // Simulates 42 games.
+    // Simulates a specified number of games.
     public static void playGames(Dice myDice, Player p1, Player p2, int numGames, boolean trace, Logger logger){
 
         // Simulates a specified number of games and increments winner counters depending on who won.
@@ -14,7 +14,7 @@ public class Games {
         }
 
         // Prints all win percentages.
-        System.out.println("\n\n\nAll 42 games are now done!");
+        System.out.println("\n\n\nAll " + numGames + " games are now done!");
         System.out.printf("Player 1 Win Percentage: %.2f \n", p1.calcWinPerc());
         System.out.printf("Player 2 Win Percentage: %.2f \n", p2.calcWinPerc());
         
