@@ -5,22 +5,23 @@ import java.util.Random;
 
 public class CardDeck {
 
-    private ArrayList<String> cards;
+    private ArrayList<Card> cards;
 
-    public CardDeck(){
+    public CardDeck(boolean drawPile){
         resetCards();
     }
 
+
     private void resetCards(){
         cards = new ArrayList<>();
-        cards.add("Sea Battle 2");
-        cards.add("Sea Battle 2");
-        cards.add("Sea Battle  3");
-        cards.add("Sea Battle  3");
-        cards.add("Sea Battle  4");
-        cards.add("Sea Battle  4");
+        cards.add(new Card("Sea Battle 2"));
+        cards.add(new Card("Sea Battle 2"));
+        cards.add(new Card("Sea Battle 3"));
+        cards.add(new Card("Sea Battle 3"));
+        cards.add(new Card("Sea Battle 4"));
+        cards.add(new Card("Sea Battle 4"));
         for (int i = 0; i < 29; i++){
-            cards.add("nop");
+            cards.add(new Card("nop"));
         }
     }
 
@@ -28,15 +29,15 @@ public class CardDeck {
     public void shuffleCards(int shuffleTimes){
         Random bag = new Random();
         for (int i = 0; i < shuffleTimes; i++){
-            int removedIndex = bag.nextInt(cards.size());
-            String removedCard = cards.get(removedIndex);
+            int removedIndex = bag.nextInt(cards.size() - 1);
+            Card removedCard = cards.get(removedIndex);
             cards.remove(removedIndex);
             cards.add(removedCard);
         }
     }
 
     // Draws a card from the pile, removing it once drawn.
-    public String drawCard(){
+    public Card drawCard(){
 
         // If no cards left, resets the cards and shuffles them.
         if (cards.size() == 0){
@@ -44,10 +45,9 @@ public class CardDeck {
             shuffleCards(50);
         }
 
-        String returnCard = cards.get(0);
+        Card returnCard = cards.get(0);
         cards.remove(0);
         return returnCard;
     }
-
 
 }

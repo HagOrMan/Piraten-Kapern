@@ -7,6 +7,7 @@ public class Player{
     private int points;
     private int games;
     private String name, strategy;
+    private Card card;
 
     public Player(String name, String strategy){
         wins = 0;
@@ -29,12 +30,23 @@ public class Player{
     public void won(){ wins++; }
     public void playedGame(){ games++; }
 
+    public void drawCard(CardDeck deck){
+        card = deck.drawCard();
+    }
+
     public int roll(Dice myDice, boolean trace, Logger logger){
         if (strategy.equals("random")){
             return Strategies.randomRoller(myDice, this, trace, logger);
         }
         else if (strategy.equals("combo")){
-            return Strategies.comboRoller(myDice, this, trace, logger);
+
+            // Checks if we have a sea battle and calls that method instead of combo if so.
+            if (card.getType().equals("Sea Battle")){
+                return 0;
+            }
+            else {
+                return Strategies.comboRoller(myDice, this, trace, logger);
+            }
         }
         else{
             return 0;

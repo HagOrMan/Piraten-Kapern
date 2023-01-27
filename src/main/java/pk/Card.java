@@ -4,10 +4,12 @@ public class Card {
 
     private String name;
     private String modifier;
+    private String type;
 
     public Card(String name){
         this.name = name;
         modifier = decideModifier();
+        type = decideType();
     }
 
     public String getName(){ return name; }
@@ -22,6 +24,15 @@ public class Card {
         };
     }
 
+    private String decideType(){
+        return switch (name) {
+            case "Sea Battle 2", "Sea Battle 3", "Sea Battle 4" -> "Sea Battle";
+            default -> "nop";
+        };
+    }
+
     public String getModifier(){ return modifier; }
+
+    public String getType(){ return type; }
 
 }
