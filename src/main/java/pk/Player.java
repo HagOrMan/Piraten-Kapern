@@ -34,16 +34,16 @@ public class Player{
 
     public int roll(Dice myDice, boolean trace, Logger logger){
         if (strategy.equals("random")){
-            return Strategies.randomRoller(myDice, this, trace, logger);
+            return Strategies.randomRoller(myDice, this, trace, logger, card);
         }
         else if (strategy.equals("combo")){
 
             // Checks if we have a sea battle and calls that method instead of combo if so.
             if (card.getType().equals("Sea Battle")){
-                return 0;
+                return Strategies.seaRoller(myDice, this, trace, logger, card);
             }
             else {
-                return Strategies.comboRoller(myDice, this, trace, logger);
+                return Strategies.comboRoller(myDice, this, trace, logger, card);
             }
         }
         else{
