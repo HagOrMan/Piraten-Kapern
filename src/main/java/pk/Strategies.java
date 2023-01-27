@@ -13,16 +13,16 @@ public class Strategies {
         if (trace) {logger.info("Player " + player.getName() + " is now rolling...");}
         myDice.resetRolls();
         myDice.rollDice(logger, trace);
+        int points = calcPoints(myDice, card);
 
         // Checks how many skulls there are, exits method if 3 or more.
         int numSkulls = myDice.getFaceRoll(Faces.SKULL);
         if (numSkulls > 2){
             if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-            return 0;
+            return points;
         }
         
         boolean choice;
-        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -48,7 +48,7 @@ public class Strategies {
             points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-                return 0;
+                return points;
             }
             else{
                 if (trace) {
@@ -66,15 +66,15 @@ public class Strategies {
         if (trace) {logger.info("Player " + player.getName() + " is now rolling...");}
         myDice.resetRolls();
         myDice.rollDice(logger, trace);
+        int points = calcPoints(myDice, card);
 
         // Checks how many skulls there are, exits method if 3 or more.
         int numSkulls = myDice.getFaceRoll(Faces.SKULL);
         if (numSkulls > 2){
             if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-            return 0;
+            return points;
         }
 
-        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -95,7 +95,7 @@ public class Strategies {
             points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-                return 0;
+                return points;
             }
             else{
                 if (trace) {
@@ -258,8 +258,8 @@ public class Strategies {
         if (calcPoints(myDice, card) >= 600 && myDice.getFaceRoll(Faces.SKULL) == 0){
             return false;
         }
-        // Keep rolling if less than or equal to 300 and 2 skulls.
-        if (calcPoints(myDice, card) <= 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
+        // Keep rolling if less than 300 and 2 skulls.
+        if (calcPoints(myDice, card) < 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
             return false;
         }
         // If more than 3 diamonds or gold and 1 or fewer skulls, keep rolling.
@@ -309,15 +309,15 @@ public class Strategies {
         if (trace) {logger.info("Player " + player.getName() + " is now rolling...");}
         myDice.resetRolls();
         myDice.rollDice(logger, trace);
+        int points = calcPoints(myDice, card);
 
         // Checks how many skulls there are, exits method if 3 or more.
         int numSkulls = myDice.getFaceRoll(Faces.SKULL);
         if (numSkulls > 2){
             if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-            return 0;
+            return points;
         }
 
-        int points = calcPoints(myDice, card);
         if (trace) {
             logger.trace("You have " + points + " points this turn!");
             logger.trace("You rolled " + numSkulls + " skulls!");
@@ -338,7 +338,7 @@ public class Strategies {
             points = calcPoints(myDice, card);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
-                return 0;
+                return points;
             }
             else{
                 if (trace) {
@@ -415,12 +415,12 @@ public class Strategies {
 
         // If a sea battle card was drawn, checks if they have enough sabers, returning  if not.
         if (card.getType().equals("Sea Battle")){
-            if (myDice.getFaceRoll(Faces.SABER) < Integer.parseInt(card.getModifier())){
-                // Subtracts appropriate amount of points for not meeting the saber requirement.
-                return switch (Integer.parseInt(card.getModifier())){
-                    case 2 -> points = -300;
-                    case 3 -> points = -500;
-                    case 4 -> points = -1000;
+            if (myDice.getFaceRoll(Faces.SABER) < Integer.parseInt(card.getModifier()) || myDice.getFaceRoll(Faces.SKULL) > 2){
+                // Subtracts appropriate amount of points for not meeting the saber requirement / getting 3+ skulls.
+                return switch (card.getModifier()){
+                    case "2" -> points = (-300);
+                    case "3" -> points = (-500);
+                    case "4" -> points = (-1000);
                     default -> points += 0;
                 };
             }
@@ -431,6 +431,10 @@ public class Strategies {
                 case 4 -> points = 1000;
                 default -> points += 0;
             }
+        }
+
+        if (myDice.getFaceRoll(Faces.SKULL) > 2) {
+            return 0;
         }
 
         // Basic first logic for diamond and gold points.
