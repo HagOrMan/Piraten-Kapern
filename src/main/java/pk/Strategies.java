@@ -127,6 +127,7 @@ public class Strategies {
             }
             if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
+        rerolls.clear();
 
         // Checking diamonds.
         if (myDice.getFaceRoll(Faces.DIAMOND) >= 5) {
@@ -137,6 +138,7 @@ public class Strategies {
             }
             if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
+        rerolls.clear();
 
         // Checking others, keeping if at least 6.
         for (Faces face : Faces.values()){
@@ -147,10 +149,11 @@ public class Strategies {
                             rerolls.add(i);
                         }
                     }
+                    if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
                 }
-                if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
             }
         }
+        rerolls.clear();
 
         // Now checks if at least 4 gold or diamonds.
         // Checking gold.
@@ -162,6 +165,7 @@ public class Strategies {
             }
             if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
+        rerolls.clear();
 
         // Checking diamonds.
         if (myDice.getFaceRoll(Faces.DIAMOND) >= 4) {
@@ -172,6 +176,7 @@ public class Strategies {
             }
             if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
+        rerolls.clear();
 
         // Checking others, keeping if at least 5.
         for (Faces face : Faces.values()){
@@ -182,23 +187,24 @@ public class Strategies {
                             rerolls.add(i);
                         }
                     }
-                }
-                // Adds any gold or diamonds to this if possible.
-                for (int i = 0; i < myDice.getRolls().size(); i++){
-                    if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
-                        rerolls.add(i);
 
-                        // If adding the gold/diamond puts us over the amount of rerolls we can make, gets rid of it.
-                        if (!verifyComboRoll(myDice, rerolls)){
-                            rerolls.remove(i);
-                            return rerolls;
+                    // Adds any gold or diamonds to this if possible.
+                    for (int i = 0; i < myDice.getRolls().size(); i++){
+                        if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
+                            rerolls.add(i);
+
+                            // If adding the gold/diamond puts us over the amount of rerolls we can make, gets rid of it.
+                            if (!verifyComboRoll(myDice, rerolls)){
+                                rerolls.remove(rerolls.size() - 1);
+                                return rerolls;
+                            }
                         }
                     }
+                    if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
                 }
-                if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
-
             }
         }
+        rerolls.clear();
 
         // Checking if at least 3 of one item and at least 2 of gold or diamonds.
         for (Faces face : Faces.values()){
@@ -233,7 +239,7 @@ public class Strategies {
                 rerolls.add(i);
                 // If adding this puts us over the max amount of dice to keep, just returns rerolls.
                 if (!verifyComboRoll(myDice, rerolls)){
-                    rerolls.remove(i);
+                    rerolls.remove(rerolls.size() - 1);
                     return rerolls;
                 }
             }
