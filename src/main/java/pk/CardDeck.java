@@ -7,7 +7,7 @@ public class CardDeck {
 
     private ArrayList<Card> cards;
 
-    public CardDeck(boolean drawPile){
+    public CardDeck(){
         resetCards();
     }
 

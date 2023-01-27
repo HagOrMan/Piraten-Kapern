@@ -25,3 +25,4 @@ Format: Date | Description of work
 2023-01-25 | Update readme for new Step 5 logic.
 2023-01-25 | Began working on implementing a CardDeck class.
 2023-01-27 | Make Dice class more in line with OOP principles by adding some methods for # of face rolls.
+2023-01-27 | Created Card class, finished CardDeck, and delivered F12 by letting user draw a card each turn.
