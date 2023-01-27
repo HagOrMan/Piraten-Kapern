@@ -24,3 +24,4 @@ Format: Date | Description of work
 2023-01-25 | Updated Strategies class to ensure the combo player does not reroll only one dice.
 2023-01-25 | Update readme for new Step 5 logic.
 2023-01-25 | Began working on implementing a CardDeck class.
+2023-01-27 | Make Dice class more in line with OOP principles by adding some methods for # of face rolls.

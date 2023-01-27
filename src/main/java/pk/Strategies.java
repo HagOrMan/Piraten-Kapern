@@ -15,7 +15,7 @@ public class Strategies {
         myDice.rollDice(logger, trace);
 
         // Checks how many skulls there are, exits method if 3 or more.
-        int numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
+        int numSkulls = myDice.getFaceRoll(Faces.SKULL);
         if (numSkulls > 2){
             if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
             return 0;
@@ -49,7 +49,7 @@ public class Strategies {
 
             // Rerolls all non skull dice.
             myDice.rollDice(logger, trace);
-            numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
+            numSkulls = myDice.getFaceRoll(Faces.SKULL);
             points = calcPoints(myDice);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
@@ -73,7 +73,7 @@ public class Strategies {
         myDice.rollDice(logger, trace);
 
         // Checks how many skulls there are, exits method if 3 or more.
-        int numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
+        int numSkulls = myDice.getFaceRoll(Faces.SKULL);
         if (numSkulls > 2){
             if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
             return 0;
@@ -96,7 +96,7 @@ public class Strategies {
 
             // Rerolls all specified non skull dice.
             myDice.rollComboDice(logger, comboRollStrategy(myDice), trace);
-            numSkulls = countFace(myDice.getRolls(), Faces.SKULL);
+            numSkulls = myDice.getFaceRoll(Faces.SKULL);
             points = calcPoints(myDice);
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
@@ -194,7 +194,7 @@ public class Strategies {
             if (face != Faces.SKULL && face != Faces.GOLD && face != Faces.DIAMOND) {
 
                 // First checks for at least 3 of this item.
-                if (countFace(myDice.getRolls(), face) >= 3){
+                if (myDice.getFaceRoll(face) >= 3){
 
                     for (int i = 0; i < myDice.getRolls().size(); i++){
                         if (myDice.getRolls().get(i) == face){
@@ -202,7 +202,7 @@ public class Strategies {
                         }
                     }
                     // Next checks for at least 2 gold or diamond.
-                    if (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD) >= 2 ){
+                    if (myDice.getFaceRoll(Faces.DIAMOND) + myDice.getFaceRoll(Faces.GOLD) >= 2 ){
                         for (int i = 0; i < myDice.getRolls().size(); i++){
                             if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
                                 rerolls.add(i);
@@ -239,23 +239,23 @@ public class Strategies {
             return true;
         }
         // Keep rolling if more than or equal to 800 and no skulls yet.
-        if (calcPoints(myDice) >= 600 && countFace(myDice.getRolls(), Faces.SKULL) == 0){
+        if (calcPoints(myDice) >= 600 && myDice.getFaceRoll(Faces.SKULL) == 0){
             return false;
         }
         // Keep rolling if less than or equal to 300 and 2 skulls.
-        if (calcPoints(myDice) <= 300 && countFace(myDice.getRolls(), Faces.SKULL) == 2){
+        if (calcPoints(myDice) <= 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
             return false;
         }
         // If more than 3 diamonds or gold and 1 or fewer skulls, keep rolling.
-        if (countFace(myDice.getRolls(), Faces.SKULL) <= 1 &&
-                (countFace(myDice.getRolls(), Faces.DIAMOND) >= 3 || countFace(myDice.getRolls(), Faces.GOLD) >= 3)){
+        if (myDice.getFaceRoll(Faces.SKULL) <= 1 &&
+                (myDice.getFaceRoll(Faces.DIAMOND) >= 3 || myDice.getFaceRoll(Faces.GOLD) >= 3)){
             return false;
         }
 
         // Checks if we have any combo of 3 or more and 1 skull max, in which case we want to reroll.
         for (Faces face : Faces.values()){
             if (face != Faces.SKULL){
-                if (countFace(myDice.getRolls(), face) >= 3 && countFace(myDice.getRolls(), Faces.SKULL) <= 1){
+                if (myDice.getFaceRoll(face) >= 3 && myDice.getFaceRoll(Faces.SKULL) <= 1){
                     return false;
                 }
             }
@@ -264,14 +264,14 @@ public class Strategies {
         // Checks if we have any combo of 5 or more and 2 skulls, in which case we want to end our turn.
         for (Faces face : Faces.values()){
             if (face != Faces.SKULL){
-                if (countFace(myDice.getRolls(), face) >= 5 && countFace(myDice.getRolls(), Faces.SKULL) == 2){
+                if (myDice.getFaceRoll(face) >= 5 && myDice.getFaceRoll(Faces.SKULL) == 2){
                     return true;
                 }
             }
         }
 
         // Keep rolling if more than or equal to 300 points and 1 or fewer skulls.
-        if (calcPoints(myDice) >= 300 && countFace(myDice.getRolls(), Faces.SKULL) <= 1){
+        if (calcPoints(myDice) >= 300 && myDice.getFaceRoll(Faces.SKULL) <= 1){
             return false;
         }
 
@@ -281,29 +281,19 @@ public class Strategies {
 
     // Ensures that the number of dice we want to reroll isn't less than 2.
     public static boolean verifyComboRoll(Dice myDice, ArrayList<Integer> rerolls){
-        return 8 - rerolls.size() - countFace(myDice.getRolls(), Faces.SKULL) >= 2;
-    }
-
-    // Returns the number of a certain face in the list.
-    public static int countFace(ArrayList<Faces> rolls, Faces face){
-        int counter = 0;
-        for (Faces roll : rolls) {
-            if (roll == face)
-                counter++;
-        }
-        return counter;
+        return 8 - rerolls.size() - myDice.getFaceRoll(Faces.SKULL) >= 2;
     }
 
     // Logic for calculating points of their dice roll.
     public static int calcPoints(Dice myDice){
 
         // Basic first logic for diamond and gold points.
-        int points = 100 * (countFace(myDice.getRolls(), Faces.DIAMOND) + countFace(myDice.getRolls(), Faces.GOLD));
+        int points = 100 * (myDice.getFaceRoll(Faces.DIAMOND) + myDice.getFaceRoll(Faces.GOLD));
 
         // Adding points for any combos.
         for (Faces face : Faces.values()){
             if (face == Faces.SKULL){ continue; }
-            switch (countFace(myDice.getRolls(), face)) {
+            switch (myDice.getFaceRoll(face)) {
                 case 3 -> points += 100;
                 case 4 -> points += 200;
                 case 5 -> points += 500;

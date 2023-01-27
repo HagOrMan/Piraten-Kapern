@@ -1,5 +1,7 @@
 package pk;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,9 +9,14 @@ import org.apache.logging.log4j.Logger;
 public class Dice {
 
     private ArrayList<Faces> rolls;
+    private Map<Faces, Integer> faceRolls;
 
     public Dice(){
         rolls = new ArrayList<Faces>();
+        faceRolls = new HashMap<>();
+        for (Faces face: Faces.values()){
+            faceRolls.put(face, 0);
+        }
     }
 
     public Faces roll() {
@@ -43,6 +50,7 @@ public class Dice {
         }
 
         if (trace) {logger.trace(diceRolls);}
+        updateFaceRolls();
 
     }
 
@@ -68,6 +76,7 @@ public class Dice {
         }
 
         if (trace) { logger.trace("Combo Player " + diceRerolls);   logger.trace(diceRolls);}
+        updateFaceRolls();
 
     }
 
@@ -75,4 +84,25 @@ public class Dice {
     public void resetRolls(){ rolls.clear(); }
     
     public ArrayList<Faces> getRolls(){ return rolls; }
+
+    // Updates the number of rolls each face has in the dice rolls.
+    private void updateFaceRolls(){
+        for (Faces face : Faces.values()){
+            faceRolls.replace(face, countFace(face));
+        }
+    }
+
+    // Counts the number of dice that are of a certain face in the roll.
+    private int countFace(Faces face){
+        int counter = 0;
+        for (Faces roll : rolls){
+            if (roll == face){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public int getFaceRoll(Faces face){ return faceRolls.get(face); }
+
 }
