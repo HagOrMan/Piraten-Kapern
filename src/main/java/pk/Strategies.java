@@ -119,73 +119,84 @@ public class Strategies {
 
         // Checks for at least 5 of gold or diamonds, keeping those, then at least 6 of anything else.
         // Checking gold
-        for (int i = 0; i < myDice.getRolls().size(); i++){
-            if (myDice.getRolls().get(i) == Faces.GOLD){
-                rerolls.add(i);
+        if (myDice.getFaceRoll(Faces.GOLD) >= 5) {
+            for (int i = 0; i < myDice.getRolls().size(); i++) {
+                if (myDice.getRolls().get(i) == Faces.GOLD) {
+                    rerolls.add(i);
+                }
             }
+            if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
-        if (rerolls.size() < 5) { rerolls.clear(); }
-        else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
 
         // Checking diamonds.
-        for (int i = 0; i < myDice.getRolls().size(); i++){
-            if (myDice.getRolls().get(i) == Faces.DIAMOND){
-                rerolls.add(i);
+        if (myDice.getFaceRoll(Faces.DIAMOND) >= 5) {
+            for (int i = 0; i < myDice.getRolls().size(); i++) {
+                if (myDice.getRolls().get(i) == Faces.DIAMOND) {
+                    rerolls.add(i);
+                }
             }
+            if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
-        if (rerolls.size() < 5) { rerolls.clear(); }
-        else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
 
         // Checking others, keeping if at least 6.
         for (Faces face : Faces.values()){
             if (face != Faces.SKULL){
-                for (int i = 0; i < myDice.getRolls().size(); i++){
-                    if (myDice.getRolls().get(i) == face){
-                        rerolls.add(i);
+                if (myDice.getFaceRoll(face) >= 6) {
+                    for (int i = 0; i < myDice.getRolls().size(); i++) {
+                        if (myDice.getRolls().get(i) == face) {
+                            rerolls.add(i);
+                        }
                     }
                 }
-                if (rerolls.size() < 6) { rerolls.clear(); }
-                else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
+                if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
             }
         }
 
         // Now checks if at least 4 gold or diamonds.
-        // Checking gold
-        for (int i = 0; i < myDice.getRolls().size(); i++){
-            if (myDice.getRolls().get(i) == Faces.GOLD){
-                rerolls.add(i);
+        // Checking gold.
+        if (myDice.getFaceRoll(Faces.GOLD) >= 4) {
+            for (int i = 0; i < myDice.getRolls().size(); i++) {
+                if (myDice.getRolls().get(i) == Faces.GOLD) {
+                    rerolls.add(i);
+                }
             }
+            if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
-        if (rerolls.size() < 4) { rerolls.clear(); }
-        else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
 
         // Checking diamonds.
-        for (int i = 0; i < myDice.getRolls().size(); i++){
-            if (myDice.getRolls().get(i) == Faces.DIAMOND){
-                rerolls.add(i);
+        if (myDice.getFaceRoll(Faces.DIAMOND) >= 4) {
+            for (int i = 0; i < myDice.getRolls().size(); i++) {
+                if (myDice.getRolls().get(i) == Faces.DIAMOND) {
+                    rerolls.add(i);
+                }
             }
+            if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
         }
-        if (rerolls.size() < 4) { rerolls.clear(); }
-        else { if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
 
         // Checking others, keeping if at least 5.
         for (Faces face : Faces.values()){
             if (face != Faces.SKULL){
-                for (int i = 0; i < myDice.getRolls().size(); i++){
-                    if (myDice.getRolls().get(i) == face){
-                        rerolls.add(i);
-                    }
-                }
-                if (rerolls.size() < 5) { rerolls.clear(); }
-                else {
-                    // Adds any gold or diamonds to this if possible.
-                    for (int i = 0; i < myDice.getRolls().size(); i++){
-                        if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
+                if (myDice.getFaceRoll(face) >= 5) {
+                    for (int i = 0; i < myDice.getRolls().size(); i++) {
+                        if (myDice.getRolls().get(i) == face) {
                             rerolls.add(i);
                         }
                     }
-                    if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
                 }
+                // Adds any gold or diamonds to this if possible.
+                for (int i = 0; i < myDice.getRolls().size(); i++){
+                    if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
+                        rerolls.add(i);
+
+                        // If adding the gold/diamond puts us over the amount of rerolls we can make, gets rid of it.
+                        if (!verifyComboRoll(myDice, rerolls)){
+                            rerolls.remove(i);
+                            return rerolls;
+                        }
+                    }
+                }
+                if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
+
             }
         }
 
@@ -221,7 +232,10 @@ public class Strategies {
             if (myDice.getRolls().get(i) == Faces.DIAMOND || myDice.getRolls().get(i) == Faces.GOLD){
                 rerolls.add(i);
                 // If adding this puts us over the max amount of dice to keep, just returns rerolls.
-                if (!verifyComboRoll(myDice, rerolls)){ rerolls.remove(i); return rerolls; }
+                if (!verifyComboRoll(myDice, rerolls)){
+                    rerolls.remove(i);
+                    return rerolls;
+                }
             }
         }
         if (rerolls.size() > 0){ if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
@@ -232,6 +246,7 @@ public class Strategies {
     }
 
     // Decides if the player should keep rolling or stop because they have enough points, true if they should stop.
+    // If statements are in order of priority for stopping/continuing rerolling.
     public static boolean comboStopStrategy(Dice myDice){
 
         // Returns immediately to stop rolling if more than or equal to 800 points.
