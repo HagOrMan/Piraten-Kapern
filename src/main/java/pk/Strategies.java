@@ -34,12 +34,7 @@ public class Strategies {
         while (true){
 
             // Randomly decides if they will keep their score or reroll all.
-            if (bag.nextInt(2) == 0){
-                choice = false;
-            }
-            else{
-                choice = true;
-            }
+            choice = bag.nextInt(2) != 0;
 
             // Ends turn.
             if (choice){
@@ -115,7 +110,7 @@ public class Strategies {
 
     // Decides which dice to reroll to get the best score.
     public static ArrayList<Integer> comboRollStrategy(Dice myDice){
-        ArrayList<Integer> rerolls = new ArrayList<Integer>();
+        ArrayList<Integer> rerolls = new ArrayList<>();
 
         // Checks for at least 5 of gold or diamonds, keeping those, then at least 6 of anything else.
         // Checking gold
@@ -358,7 +353,7 @@ public class Strategies {
 
     // Decides which dice to reroll to get the best score while hitting the sea battle target.
     public static ArrayList<Integer> seaRollStrategy(Dice myDice, int target){
-        ArrayList<Integer> rerolls = new ArrayList<Integer>();
+        ArrayList<Integer> rerolls = new ArrayList<>();
 
         // First always add enough sabers to hit the target or just as many as possible.
         for (int i = 0; i < myDice.getRolls().size() && rerolls.size() < target; i++){
@@ -384,7 +379,7 @@ public class Strategies {
         }
 
         // Code here is run if not enough gold/diamonds, so choose filler dice to keep so we only reroll 2.
-        int diceToFind = myDice.getRolls().size() - rerolls.size() - myDice.getFaceRoll(Faces.SKULL);
+        int diceToFind = myDice.getRolls().size() - rerolls.size() - myDice.getFaceRoll(Faces.SKULL) - 2;
         for (int i = 0; i < myDice.getRolls().size() && diceToFind > 0; i++){
             // Makes sure it's not a skull or something already in the list that we're adding.
             if (myDice.getRolls().get(i) != Faces.SKULL && !rerolls.contains(i)){

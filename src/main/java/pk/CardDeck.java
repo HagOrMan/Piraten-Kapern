@@ -9,6 +9,7 @@ public class CardDeck {
 
     public CardDeck(){
         resetCards();
+        shuffleCards(50);
     }
 
 
