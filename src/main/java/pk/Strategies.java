@@ -396,7 +396,7 @@ public class Strategies {
     public static boolean seaStopStrategy(Dice myDice, int target, Card card){
 
         // If we haven't hit the target, always reroll.
-        if (myDice.getFaceRoll(Faces.SABER) > target){
+        if (myDice.getFaceRoll(Faces.SABER) < target){
             return false;
         }
         // Returns immediately to stop rolling if more than or equal to 800 points, and we reached the target.
