@@ -73,6 +73,7 @@ public class Dice {
             }
         }
 
+        if (trace) { logger.trace(diceRolls);}
         updateFaceRolls();
 
     }
