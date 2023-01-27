@@ -32,6 +32,8 @@ public class Player{
 
     public void drawCard(CardDeck deck){ card = deck.drawCard(); }
 
+    public String getCardName(){ return card.getName(); }
+
     public int roll(Dice myDice, boolean trace, Logger logger){
         if (strategy.equals("random")){
             return Strategies.randomRoller(myDice, this, trace, logger, card);

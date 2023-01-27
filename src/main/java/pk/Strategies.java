@@ -416,13 +416,19 @@ public class Strategies {
         // If a sea battle card was drawn, checks if they have enough sabers, returning  if not.
         if (card.getType().equals("Sea Battle")){
             if (myDice.getFaceRoll(Faces.SABER) < Integer.parseInt(card.getModifier())){
-                return points;
+                // Subtracts appropriate amount of points for not meeting the saber requirement.
+                return switch (Integer.parseInt(card.getModifier())){
+                    case 2 -> points = -300;
+                    case 3 -> points = -500;
+                    case 4 -> points = -1000;
+                    default -> points += 0;
+                };
             }
             // Adds appropriate amount of points.
             switch (Integer.parseInt(card.getModifier())){
-                case 2 -> points += 300;
-                case 3 -> points += 500;
-                case 4 -> points += 1000;
+                case 2 -> points = 300;
+                case 3 -> points = 500;
+                case 4 -> points = 1000;
                 default -> points += 0;
             }
         }

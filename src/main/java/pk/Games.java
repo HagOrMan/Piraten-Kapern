@@ -29,15 +29,18 @@ public class Games {
 
             // Eachs player takes their turn rolling.
             p1.drawCard(drawPile);
+            logger.error("Player " + p1.getName() + " has drawn a " + p1.getCardName());
             p1.addPoints(p1.roll(myDice, trace, logger));
             if (trace) {logger.info("Player " + p1.getName() + " has " + p1.getPoints() + " points total.");}
             p2.drawCard(drawPile);
+            logger.error("Player " + p2.getName() + " has drawn a " + p2.getCardName());
             p2.addPoints(p2.roll(myDice, trace, logger));
             if (trace) {logger.info("Player " + p2.getName() + " has " + p2.getPoints() + " points total.");}
 
             // Lets p1 go again if p2 got more than 6000 points but p1 hasn't this turn.
             if (p2.getPoints() >= 6000 && p1.getPoints() < 6000){
                 p1.drawCard(drawPile);
+                logger.error("Player " + p1.getName() + " has drawn a " + p1.getCardName());
                 p1.addPoints(p1.roll(myDice, trace, logger));
                 if (trace) {logger.info("Player " + p1.getName() + " has " + p1.getPoints() + " points total.");}
             }
