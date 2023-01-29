@@ -46,7 +46,7 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |     | F12 | User will draw a card at the start of each turn | D | 1/26/23 | 1/27/23 |
 |     | F13 | User choosing combo player will have them prioritize sea battles when drawn | D | 1/27/23 | 1/27/23 |
 |     | F14 | User will have card effects applied to their turn | D | 1/27/23 | 1/27/23 |
-|     | F15 | User can draw monkey business card | P | 1/28/23 |  |
+|     | F15 | User can draw monkey business card | D | 1/28/23 | 1/28/23 |
 |     | F16 | Monkey business logic is applied to combo for points | B (F15) |  |  |
 |     | F17 | Combo player logic works with monkey business | B (F16) |  |  |
 | ... | ... | ... | ... | ... | ... |
