@@ -92,6 +92,7 @@ public class Strategies {
             myDice.rollComboDice(logger, comboRollStrategy(myDice), trace);
             numSkulls = myDice.getFaceRoll(Faces.SKULL);
             points = calcPoints(myDice, card);
+
             if (numSkulls > 2){
                 if (trace) {logger.info("Sorry, your turn is over!! You rolled " + numSkulls + " skulls...");}
                 return points;
@@ -107,7 +108,7 @@ public class Strategies {
 
     }
 
-    // Decides which dice to reroll to get the best score.
+    // Decides which dice to reroll to get the best score. Checks in priority of what gives the most points.
     public static ArrayList<Integer> comboRollStrategy(Dice myDice){
         ArrayList<Integer> rerolls = new ArrayList<>();
 
@@ -238,10 +239,11 @@ public class Strategies {
                 }
             }
         }
-        if (rerolls.size() > 0){ if (verifyComboRoll(myDice, rerolls)) { return rerolls;} }
+        if (rerolls.size() > 0){
+            if (verifyComboRoll(myDice, rerolls)) { return rerolls;}
+        }
 
-        // Final option is returning a 'blank' value if this somehow happens to reroll all.
-        rerolls.add(-1);
+        // Final option is returning an empty list if this somehow happens, making it reroll all.
         return rerolls;
     }
 
@@ -519,26 +521,25 @@ public class Strategies {
                         return false;
                     }
                 }
-                else{
-                    if (card.getType().equals("Monkey Business")){
-                        if (face == Faces.MONKEY || face == Faces.PARROT){
-                            if (myDice.getFaceRoll(Faces.PARROT) + myDice.getFaceRoll(Faces.MONKEY) < 3) {
-                                return false;
-                            }
-                        }
-                        else if (myDice.getFaceRoll(face) < 3) {
-                                return false;
-                        }
-                    }
-                    else {
-                        // If a face exists in the rolls but is not part of a combo, returns false.
-                        if (myDice.getFaceRoll(face) < 3) {
+                // Checks if monkey business, since then only need 3 parrots/monkeys combined.
+                else if (card.getType().equals("Monkey Business")){
+                    if (face == Faces.MONKEY || face == Faces.PARROT){
+                        if (myDice.getFaceRoll(Faces.PARROT) + myDice.getFaceRoll(Faces.MONKEY) < 3) {
                             return false;
                         }
                     }
+                    else if (myDice.getFaceRoll(face) < 3) {
+                            return false;
+                    }
                 }
-
+                else {
+                    // If a face exists in the rolls but is not part of a combo, returns false.
+                    if (myDice.getFaceRoll(face) < 3) {
+                        return false;
+                    }
+                }
             }
+
         }
 
         return true;

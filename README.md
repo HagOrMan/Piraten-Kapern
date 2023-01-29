@@ -49,5 +49,3 @@ Remark: **We are assuming here you are using a _real_ shell (e.g., anything but 
 |     | F15 | User can draw monkey business card | D | 1/28/23 | 1/28/23 |
 |     | F16 | Monkey business logic is applied to combo for points | D (F15) | 1/28/23 | 1/28/23 |
 | ... | ... | ... | ... | ... | ... |
-
-add trace statements for cards

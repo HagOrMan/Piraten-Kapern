@@ -27,12 +27,14 @@ public class Player{
     public String getName(){ return name; }
 
     public void won(){ wins++; }
+
     public void playedGame(){ games++; }
 
     public void drawCard(CardDeck deck){ card = deck.drawCard(); }
 
     public String getCardName(){ return card.getName(); }
 
+    // Rolls dice depending on what strategy the player has.
     public int roll(Dice myDice, boolean trace, Logger logger){
         if (strategy.equals("random")){
             return Strategies.randomRoller(myDice, this, trace, logger, card);
