@@ -27,6 +27,7 @@ public class Card {
     private String decideType(){
         return switch (name) {
             case "Sea Battle 2", "Sea Battle 3", "Sea Battle 4" -> "Sea Battle";
+            case "Monkey Business" -> "Monkey Business";
             default -> "nop";
         };
     }

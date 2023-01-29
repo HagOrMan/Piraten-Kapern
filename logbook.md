@@ -29,3 +29,4 @@ Format: Date | Description of work
 2023-01-27 | Delivered F13, finalizing a strategy for when the user draws a sea battle card.
 2023-01-27 | Delivered F14, applying card effects to the user's turn.
 2023-01-28 | Implemented overloading in comboRoller for sea battle logic.
+2023-01-28 | Delivered F15, allowing the player to draw the monkey business card.

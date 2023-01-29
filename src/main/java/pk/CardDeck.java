@@ -21,7 +21,10 @@ public class CardDeck {
         cards.add(new Card("Sea Battle 3"));
         cards.add(new Card("Sea Battle 4"));
         cards.add(new Card("Sea Battle 4"));
-        for (int i = 0; i < 29; i++){
+        for (int i = 0; i < 4; i++){
+            cards.add(new Card("Monkey Business"));
+        }
+        for (int i = 0; i < 25; i++){
             cards.add(new Card("nop"));
         }
     }
