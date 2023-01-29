@@ -1,7 +1,6 @@
 package pk;
 import java.util.ArrayList;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Strategies {
@@ -301,9 +300,7 @@ public class Strategies {
     }
 
     // Decides which dice to reroll to win the sea battle.
-    public static int seaRoller(Dice myDice, Player player, boolean trace, Logger logger, Card card){
-
-        int target = Integer.parseInt(card.getModifier());
+    public static int comboRoller(Dice myDice, Player player, boolean trace, Logger logger, Card card, int target){
 
         // Does the first roll for the user.
         if (trace) {logger.info("Player " + player.getName() + " is now rolling...");}
@@ -327,13 +324,13 @@ public class Strategies {
         while (true){
 
             // Ends turn depending on the sea combo player strategy.
-            if (seaStopStrategy(myDice, target, card)){
+            if (comboStopStrategy(myDice, target, card)){
                 if (trace) {logger.info("Player " + player.getName() + " has finished rolling!");}
                 return points;
             }
 
             // Rerolls all specified non skull dice.
-            myDice.rollComboDice(logger, seaRollStrategy(myDice, target), trace);
+            myDice.rollComboDice(logger, comboRollStrategy(myDice, target), trace);
             numSkulls = myDice.getFaceRoll(Faces.SKULL);
             points = calcPoints(myDice, card);
             if (numSkulls > 2){
@@ -352,7 +349,7 @@ public class Strategies {
     }
 
     // Decides which dice to reroll to get the best score while hitting the sea battle target.
-    public static ArrayList<Integer> seaRollStrategy(Dice myDice, int target){
+    public static ArrayList<Integer> comboRollStrategy(Dice myDice, int target){
         ArrayList<Integer> rerolls = new ArrayList<>();
 
         // First always add enough sabers to hit the target or just as many as possible.
@@ -393,7 +390,7 @@ public class Strategies {
 
     // Decides if the player should keep rolling or stop because they have enough points, true if they should stop.
     // If statements are in order of priority for stopping/continuing rerolling.
-    public static boolean seaStopStrategy(Dice myDice, int target, Card card){
+    public static boolean comboStopStrategy(Dice myDice, int target, Card card){
 
         // If we haven't hit the target, always reroll.
         if (myDice.getFaceRoll(Faces.SABER) < target){

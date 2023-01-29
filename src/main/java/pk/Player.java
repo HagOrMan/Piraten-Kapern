@@ -1,5 +1,4 @@
 package pk;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Player{
@@ -42,7 +41,7 @@ public class Player{
 
             // Checks if we have a sea battle and calls that method instead of combo if so.
             if (card.getType().equals("Sea Battle")){
-                return Strategies.seaRoller(myDice, this, trace, logger, card);
+                return Strategies.comboRoller(myDice, this, trace, logger, card, Integer.parseInt(card.getModifier()));
             }
             else {
                 return Strategies.comboRoller(myDice, this, trace, logger, card);

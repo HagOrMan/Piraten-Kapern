@@ -28,3 +28,4 @@ Format: Date | Description of work
 2023-01-27 | Created Card class, finished CardDeck, and delivered F12 by letting user draw a card each turn.
 2023-01-27 | Delivered F13, finalizing a strategy for when the user draws a sea battle card.
 2023-01-27 | Delivered F14, applying card effects to the user's turn.
+2023-01-28 | 
