@@ -253,9 +253,13 @@ public class Strategies {
         if (calcPoints(myDice, card) >= 800){
             return true;
         }
-        // Keep rolling if more than or equal to 800 and no skulls yet.
+        // Keep rolling if more than or equal to 600 and no skulls yet.
         if (calcPoints(myDice, card) >= 600 && myDice.getFaceRoll(Faces.SKULL) == 0){
             return false;
+        }
+        //Stop rolling if 700 points and at least 1 skull.
+        if (calcPoints(myDice, card) >= 700 && myDice.getFaceRoll(Faces.SKULL) > 0){
+            return true;
         }
         // Keep rolling if less than 300 and 2 skulls.
         if (calcPoints(myDice, card) < 300 && myDice.getFaceRoll(Faces.SKULL) == 2){
@@ -437,9 +441,47 @@ public class Strategies {
         // Basic first logic for diamond and gold points.
         points += 100 * (myDice.getFaceRoll(Faces.DIAMOND) + myDice.getFaceRoll(Faces.GOLD));
 
+        // Checks if monkey business, using proper logic if so.
+        if (card.getType().equals("Monkey Business")){
+            switch (myDice.getFaceRoll(Faces.MONKEY) + myDice.getFaceRoll(Faces.PARROT)) {
+                case 3 -> points += 100;
+                case 4 -> points += 200;
+                case 5 -> points += 500;
+                case 6 -> points += 1000;
+                case 7 -> points += 2000;
+                case 8 -> points += 4000;
+                default -> {
+                }
+            }
+        }
+        else {
+            switch (myDice.getFaceRoll(Faces.PARROT)) {
+                case 3 -> points += 100;
+                case 4 -> points += 200;
+                case 5 -> points += 500;
+                case 6 -> points += 1000;
+                case 7 -> points += 2000;
+                case 8 -> points += 4000;
+                default -> {
+                }
+            }
+            switch (myDice.getFaceRoll(Faces.MONKEY)) {
+                case 3 -> points += 100;
+                case 4 -> points += 200;
+                case 5 -> points += 500;
+                case 6 -> points += 1000;
+                case 7 -> points += 2000;
+                case 8 -> points += 4000;
+                default -> {
+                }
+            }
+        }
+
         // Adding points for any combos.
-        for (Faces face : Faces.values()){
-            if (face == Faces.SKULL){ continue; }
+        for (Faces face : Faces.values()) {
+            if (face == Faces.SKULL || face == Faces.MONKEY || face == Faces.PARROT) {
+                continue;
+            }
             switch (myDice.getFaceRoll(face)) {
                 case 3 -> points += 100;
                 case 4 -> points += 200;
@@ -478,9 +520,21 @@ public class Strategies {
                     }
                 }
                 else{
-                    // If a face exists in the rolls but is not part of a combo, returns false.
-                    if (myDice.getFaceRoll(face) < 3){
-                        return false;
+                    if (card.getType().equals("Monkey Business")){
+                        if (face == Faces.MONKEY || face == Faces.PARROT){
+                            if (myDice.getFaceRoll(Faces.PARROT) + myDice.getFaceRoll(Faces.MONKEY) < 3) {
+                                return false;
+                            }
+                        }
+                        else if (myDice.getFaceRoll(face) < 3) {
+                                return false;
+                        }
+                    }
+                    else {
+                        // If a face exists in the rolls but is not part of a combo, returns false.
+                        if (myDice.getFaceRoll(face) < 3) {
+                            return false;
+                        }
                     }
                 }
 

@@ -30,3 +30,5 @@ Format: Date | Description of work
 2023-01-27 | Delivered F14, applying card effects to the user's turn.
 2023-01-28 | Implemented overloading in comboRoller for sea battle logic.
 2023-01-28 | Delivered F15, allowing the player to draw the monkey business card.
+2023-01-28 | Delivered F16, applying monkey business card logic to point scoring.
+2023-01-28 | Small update to combo player strategy, stopping at 700 points and 1 skull minimum.
