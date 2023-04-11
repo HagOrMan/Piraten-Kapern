@@ -2,6 +2,8 @@
 
   * Author: Kyle Hagerman
   * Email: hagermak@mcmaster.ca
+  
+ Piraten Karpen simulates the board game of the same name with two players. The user can specify whether they want each player to play randomly or maximize combos. It runs 42 games and prints win percentages after they are done, as well as logs important information in PiratenKarpen.log.
 
 ## Build and Execution
 
